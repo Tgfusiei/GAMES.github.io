@@ -3,22 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Can I Run It? - Escolha a Versão</title>
+    <title>Can I Run It? - Seleção de Versão</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; background: #121212; color: white; }
-        .btn { display: inline-block; margin: 15px; padding: 15px 30px; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; min-width: 180px; }
-        .btn-v1 { background: #e74c3c; } /* Vermelho */
-        .btn-v2 { background: #f39c12; } /* Laranja */
-        .btn-v3 { background: #3498db; } /* Azul */
-        .btn-v4 { background: #2ecc71; } /* Verde */
+        :root {
+            --bg-dark: #0a0512;
+            --card-bg: rgba(22, 12, 38, 0.75);
+            --primary-purple: #9d4edd;
+            --neon-purple: #c77dff;
+            --accent-glow: #7b2cbf;
+            --text-light: #f8f7ff;
+            --text-muted: #b8b0cf;
+            --border-purple: rgba(157, 78, 221, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(123, 44, 191, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(157, 78, 221, 0.2) 0%, transparent 45%);
+            padding: 20px;
+        }
+
+        /* Grade de fundo */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                linear-gradient(rgba(157, 78, 221, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(157, 78, 221, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--border-purple);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 0 30px rgba(123, 44, 191, 0.25),
+                        inset 0 0 15px rgba(157, 78, 221, 0.1);
+            backdrop-filter: blur(12px);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-badge {
+            display: inline-block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--neon-purple);
+            background: rgba(157, 78, 221, 0.15);
+            border: 1px solid var(--border-purple);
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 0 12px rgba(199, 125, 255, 0.6);
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+        }
+
+        .grid-versions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .version-card {
+            background: rgba(15, 8, 28, 0.8);
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            border-radius: 14px;
+            padding: 22px;
+            text-decoration: none;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .version-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-purple);
+            box-shadow: 0 10px 25px rgba(123, 44, 191, 0.4);
+            background: rgba(28, 14, 50, 0.9);
+        }
+
+        .version-tag {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--neon-purple);
+            margin-bottom: 6px;
+        }
+
+        .version-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .btn-launch {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #7b2cbf, #9d4edd);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(123, 44, 191, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .version-card:hover .btn-launch {
+            background: linear-gradient(135deg, #9d4edd, #c77dff);
+            color: #0a0512;
+            box-shadow: 0 0 15px rgba(199, 125, 255, 0.6);
+        }
+
+        footer {
+            margin-top: 35px;
+            font-size: 0.85rem;
+            color: rgba(184, 176, 207, 0.5);
+        }
     </style>
 </head>
 <body>
-    <h1>🎮 Can I Run It?</h1>
-    <p>Escolha qual versão do site você quer abrir:</p>
-    
-    <!-- Botões apontando para as 4 subpastas -->
-    <a href="./v1/index.html" class="btn btn-v1">Abrir Versão 1 (v1)</a>
-    <a href="./v2/index.html" class="btn btn-v2">Abrir Versão 2 (v2)</a>
-    <a href="./v3/index.html" class="btn btn-v3">Abrir Versão 3 (v3)</a>
-    <a href="./v4/index.html" class="btn btn-v4">Abrir Versão Nova (v4)</a>
+
+    <div class="container">
+        <div class="logo-badge">Hardware Checker</div>
+        <h1>Can I Run It?</h1>
+        <p class="subtitle">Selecione qual versão você deseja acessar:</p>
+
+        <div class="grid-versions">
+            <!-- Botão V1 -->
+            <a href="./V1/index.html" class="version-card">
+                <div>
+                    <div class="version-tag">VERSÃO 1</div>
+                    <div class="version-desc">Versão inicial do testador.</div>
+                </div>
+                <button class="btn-launch">Acessar V1</button>
+            </a>
+
+            <!-- Botão V2 -->
+            <a href="./V2/index.html" class="version-card">
+                <div>
+                    <div class="version-tag">VERSÃO 2</div>
+                    <div class="version-desc">Interface atualizada e busca otimizada.</div>
+                </div>
+                <button class="btn-launch">Acessar V2</button>
+            </a>
+
+            <!-- Botão V3 -->
+            <a href="./V3/index.html" class="version-card">
+                <div>
+                    <div class="version-tag">VERSÃO 3</div>
+                    <div class="version-desc">Suporte expandido e novos filtros.</div>
+                </div>
+                <button class="btn-launch">Acessar V3</button>
+            </a>
+
+            <!-- Botão V4 -->
+            <a href="./V4/index.html" class="version-card">
+                <div>
+                    <div class="version-tag">VERSÃO 4</div>
+                    <div class="version-desc">Versão mais recente e completa.</div>
+                </div>
+                <button class="btn-launch">Acessar V4</button>
+            </a>
+        </div>
+
+        <footer>
+            GAMES.github.io &bull; Compatibilidade de Hardware
+        </footer>
+    </div>
+
+</body>
+</html>
